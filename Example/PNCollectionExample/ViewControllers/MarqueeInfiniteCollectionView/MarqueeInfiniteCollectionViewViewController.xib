@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MarqueeInfiniteCollectionViewViewController" customModule="PNCollectionExample" customModuleProvider="target">
+            <connections>
+                <outlet property="collectionView" destination="Twc-ai-OZw" id="Of5-Va-wwX"/>
+                <outlet property="verticalCollectionView" destination="6N1-JH-KWv" id="Fja-cM-FwX"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Twc-ai-OZw" customClass="PNMarqueeInfiniteScrollCollectionView" customModule="PNCollection">
+                    <rect key="frame" x="0.0" y="44" width="414" height="120"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="120" id="CI2-fC-OTw"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Vf5-SW-RAn">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="6N1-JH-KWv" userLabel="Vertical Marquee Infinite Scroll Collection View" customClass="PNMarqueeInfiniteScrollCollectionView" customModule="PNCollection">
+                    <rect key="frame" x="0.0" y="164" width="414" height="698"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2O6-Lc-rwA">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Twc-ai-OZw" secondAttribute="trailing" id="BEL-1Q-gFa"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="6N1-JH-KWv" secondAttribute="trailing" id="CXb-82-Rrf"/>
+                <constraint firstItem="Twc-ai-OZw" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="GcP-7r-aaA"/>
+                <constraint firstItem="6N1-JH-KWv" firstAttribute="top" secondItem="Twc-ai-OZw" secondAttribute="bottom" id="PK6-sa-5dU"/>
+                <constraint firstItem="6N1-JH-KWv" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="cwC-vj-nIt"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="6N1-JH-KWv" secondAttribute="bottom" id="hKD-Yb-EfY"/>
+                <constraint firstItem="Twc-ai-OZw" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="tqs-RF-UKn"/>
+            </constraints>
+            <point key="canvasLocation" x="132" y="88"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

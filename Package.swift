@@ -21,8 +21,5 @@ let package = Package(
         .target(
             name: "PNCollection",
             dependencies: []),
-        .testTarget(
-            name: "PNCollectionTests",
-            dependencies: ["PNCollection"]),
     ]
 )
