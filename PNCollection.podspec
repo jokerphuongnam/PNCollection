@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   DESC
   s.homepage     = "https://github.com/jokerphuongnam/PNCollection"
   s.license      = { :type => "MIT", :file => "LICENSE" }
-  s.author             = { "Juanpe Catalán" => "phuongnamp99@gmail.com" }
+  s.author             = { "Pham P Nam" => "phuongnamp99@gmail.com" }
   s.ios.deployment_target = "9.0"
   s.swift_version = "5.0"
   s.source       = { :git => "https://github.com/jokerphuongnam/PNCollection.git", :tag => s.version.to_s }
