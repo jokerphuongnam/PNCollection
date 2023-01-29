@@ -10,25 +10,26 @@ import PNCollection
 
 class InfiniteScrollCardSliderViewController: UIViewController {
     @IBOutlet weak var collectionView: PNInfiniteScrollCollectionView!
-    private let data: [String] = {
-        return (0..<4).map { index in
-            "value: \(index)"
+    private let data: [(value: String, color: UIColor)] = {
+        (0..<4).map { index in
+            ("value: \(index)", [.red, .blue, .green, .gray][index])
         }
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.prefersLargeTitles = true
         collectionView.infiniteDataSource = self
         collectionView.delegate = self
         collectionView.collectionViewLayout = layout
-
+        
         collectionView.register(UINib(nibName: TextCell.name, bundle: nil) , forCellWithReuseIdentifier: TextCell.name)
     }
 }
 
 extension InfiniteScrollCardSliderViewController: PNInfiniteScrollCollectionViewDataSource {
     func numberOfSets(in collectionView: UICollectionView) -> Int {
-        data.count / 2
+        data.count
     }
     
     var layout: UICollectionViewLayout {
@@ -47,11 +48,12 @@ extension InfiniteScrollCardSliderViewController: PNInfiniteScrollCollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         data.count
     }
-        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TextCell.name, for: indexPath) as? TextCell {
-            cell.textLabel.text = data[indexPath.item]
-            cell.backgroundColor = [.red, .blue, .green, .gray].randomElement()
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TextCell.name, for: indexPath) as? TextCell {
+            cell.textLabel.text = data[indexPath.item].value
+            cell.textLabel.textColor = .white
+            cell.backgroundColor = data[indexPath.item].color
             return cell
         }
         fatalError("\(indexPath)")
@@ -60,7 +62,8 @@ extension InfiniteScrollCardSliderViewController: PNInfiniteScrollCollectionView
 
 extension InfiniteScrollCardSliderViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let alertController = UIAlertController(title: "Select item", message: data[indexPath.item], preferredStyle: .alert)
+        let index = abs(indexPath.item % data.count)
+        let alertController = UIAlertController(title: "Select item", message: data[index == 4 ? 0 : index].value, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
             
         }

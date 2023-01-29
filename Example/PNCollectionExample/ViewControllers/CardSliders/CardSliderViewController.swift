@@ -11,7 +11,7 @@ import PNCollection
 class CardSliderViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     private let data: [String] = {
-        return (0..<4).map { index in
+        (0..<4).map { index in
             "value: \(index)"
         }
     }()
@@ -21,7 +21,7 @@ class CardSliderViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.collectionViewLayout = layout
-
+        
         collectionView.register(UINib(nibName: TextCell.name, bundle: nil) , forCellWithReuseIdentifier: TextCell.name)
     }
 }
@@ -31,22 +31,14 @@ extension CardSliderViewController: UICollectionViewDataSource {
         PNCardsSliderLayout()
     }
     
-    var verticalLayout: UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
-        let firstItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(120))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [firstItem])
-        let section = NSCollectionLayoutSection(group: group)
-        return UICollectionViewCompositionalLayout(section: section)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         data.count
     }
-        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TextCell.name, for: indexPath) as? TextCell {
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TextCell.name, for: indexPath) as? TextCell {
             cell.textLabel.text = data[indexPath.item]
+            cell.textLabel.textColor = .white
             cell.backgroundColor = [.red, .blue, .green, .gray].randomElement()
             return cell
         }

@@ -8,6 +8,27 @@
 import UIKit
 
 open class PNCardsSliderLayout: UICollectionViewLayout {
+    fileprivate let size = UIScreen.main.bounds
+    fileprivate lazy var contentSize: CGSize = {
+        let cellWidth = contentWidth - 16 * CGFloat(numberOfItemsVisible)
+        let cellHeight = cellWidth
+        return CGSize(width: cellWidth, height: cellHeight)
+    }()
+    
+    fileprivate var contentWidth: CGFloat {
+        guard let collectionView = collectionView else { return 0 }
+        return collectionView.bounds.width - 16
+    }
+    
+    fileprivate var contentHeight: CGFloat = 0
+    fileprivate lazy var baseAttributes: [UICollectionViewLayoutAttributes] = {
+        guard let collectionView = collectionView else { return [] }
+        let count = collectionView.numberOfItems(inSection: 0)
+        return (0..<count).map { index in
+            UICollectionViewLayoutAttributes(forCellWith: IndexPath(item: index, section: 0))
+        }
+    }()
+    
     public var selectedItemObserve: ((_ index: Int) -> ())? = nil
     public var selectedItem: Int {
         get {
@@ -33,19 +54,6 @@ open class PNCardsSliderLayout: UICollectionViewLayout {
         return Double(selectedItemDouble) == Double(selectedItem) ? selectedItem : nil
     }
     
-    fileprivate let size = UIScreen.main.bounds
-    fileprivate lazy var contentSize: CGSize = {
-        let cellWidth = contentWidth - 16 * CGFloat(numberOfItemsVisible)
-        let cellHeight = cellWidth
-        return CGSize(width: cellWidth, height: cellHeight)
-    }()
-    
-    fileprivate var contentWidth: CGFloat {
-        guard let collectionView = collectionView else { return 0 }
-        return collectionView.bounds.width - 16
-    }
-    
-    fileprivate var contentHeight: CGFloat = 0
     open var numberOfItemsVisible: Int = 3
     
     open override var collectionViewContentSize: CGSize {
@@ -70,6 +78,7 @@ open class PNCardsSliderLayout: UICollectionViewLayout {
     
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         guard let collectionView = collectionView else { return nil }
+        let baseAttributes = baseAttributes.compactMap { $0.copy() as? UICollectionViewLayoutAttributes }
         
         let size = contentSize
         let selectedItem = selectedItem
@@ -90,7 +99,7 @@ open class PNCardsSliderLayout: UICollectionViewLayout {
         let layoutAttributes = (0..<maxVisibleItem).map { index -> UICollectionViewLayoutAttributes in
             let visibleIndex = selectedItem + index
             let reverseIndex = maxVisibleItem - index
-            let attributes = UICollectionViewLayoutAttributes(forCellWith: IndexPath(item: visibleIndex, section: 0))
+            let attributes = baseAttributes[visibleIndex]
             
             attributes.zIndex = reverseIndex
             

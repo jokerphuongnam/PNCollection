@@ -12,7 +12,7 @@ class MarqueeCollectionViewViewController: UIViewController {
     @IBOutlet weak var collectionView: PNMarqueeCollectionView!
     @IBOutlet weak var verticalCollectionView: PNMarqueeCollectionView!
     private let data: [String] = {
-        return (0..<10).map { index in
+        (0..<10).map { index in
             "value: \(index)"
         }
     }()
@@ -33,6 +33,16 @@ class MarqueeCollectionViewViewController: UIViewController {
         verticalCollectionView.direction = .vertical
 
         verticalCollectionView.register(UINib(nibName: TextCell.name, bundle: nil) , forCellWithReuseIdentifier: TextCell.name)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.startAutoScroll()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        collectionView.stopAutoScroll()
     }
 }
 

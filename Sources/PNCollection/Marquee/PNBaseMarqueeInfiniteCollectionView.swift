@@ -7,14 +7,9 @@
 
 import UIKit
 
-public enum PNMarqueeDirection {
-    case vertical
-    case horizontal
-}
-
 public protocol PNBaseMarqueeCollectionView: AnyObject {
     var duration: TimeInterval { get }
-    var direction: PNMarqueeDirection { get set }
+    var direction: UICollectionView.ScrollDirection { get set }
     var scrollSpeed: Double { get set }
     var isRunning: Bool { get set }
     var isAutoScroll: Bool { get set }
@@ -45,6 +40,8 @@ extension PNBaseMarqueeCollectionView where Self: UICollectionView {
                 scrollView.contentOffset.y += self.scrollSpeed
             case .horizontal:
                 scrollView.contentOffset.x += self.scrollSpeed
+            @unknown default:
+                break
             }
         } completion: { isFinished in
             

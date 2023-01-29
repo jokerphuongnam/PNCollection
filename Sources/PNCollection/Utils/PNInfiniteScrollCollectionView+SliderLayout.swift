@@ -1,5 +1,5 @@
 //
-//  NMInfiniteScrollCollectionView+CardsSlider.swift
+//  PNInfiniteScrollCollectionView+SliderLayout.swift
 //  PNCollection
 //
 //  Created by P.Nam on 22/11/2022.

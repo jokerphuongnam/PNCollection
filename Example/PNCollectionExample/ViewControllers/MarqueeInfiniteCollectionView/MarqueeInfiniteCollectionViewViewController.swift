@@ -12,7 +12,7 @@ class MarqueeInfiniteCollectionViewViewController: UIViewController {
     @IBOutlet weak var collectionView: PNMarqueeInfiniteScrollCollectionView!
     @IBOutlet weak var verticalCollectionView: PNMarqueeInfiniteScrollCollectionView!
     private let data: [String] = {
-        return (0..<10).map { index in
+        (0..<10).map { index in
             "value: \(index)"
         }
     }()
@@ -23,7 +23,7 @@ class MarqueeInfiniteCollectionViewViewController: UIViewController {
         collectionView.delegate = self
         collectionView.collectionViewLayout = layout
         collectionView.scrollSpeed = 5
-
+        
         collectionView.register(UINib(nibName: TextCell.name, bundle: nil) , forCellWithReuseIdentifier: TextCell.name)
         
         verticalCollectionView.infiniteDataSource = self
@@ -31,8 +31,18 @@ class MarqueeInfiniteCollectionViewViewController: UIViewController {
         verticalCollectionView.collectionViewLayout = verticalLayout
         verticalCollectionView.scrollSpeed = 5
         verticalCollectionView.direction = .vertical
-
+        
         verticalCollectionView.register(UINib(nibName: TextCell.name, bundle: nil) , forCellWithReuseIdentifier: TextCell.name)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.startAutoScroll()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        collectionView.stopAutoScroll()
     }
 }
 

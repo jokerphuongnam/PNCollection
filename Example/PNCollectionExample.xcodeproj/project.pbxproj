@@ -48,6 +48,12 @@
 		A87548742983BEA30047177D /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87548732983BEA30047177D /* StringUtils.swift */; };
 		A87548752983BEA30047177D /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87548732983BEA30047177D /* StringUtils.swift */; };
 		A87548762983BEA30047177D /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87548732983BEA30047177D /* StringUtils.swift */; };
+		A8D95B702986A6B000207F4E /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D95B6E2986A6B000207F4E /* ImageCell.swift */; };
+		A8D95B712986A6B000207F4E /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D95B6E2986A6B000207F4E /* ImageCell.swift */; };
+		A8D95B722986A6B000207F4E /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D95B6E2986A6B000207F4E /* ImageCell.swift */; };
+		A8D95B732986A6B000207F4E /* ImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8D95B6F2986A6B000207F4E /* ImageCell.xib */; };
+		A8D95B742986A6B000207F4E /* ImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8D95B6F2986A6B000207F4E /* ImageCell.xib */; };
+		A8D95B752986A6B000207F4E /* ImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8D95B6F2986A6B000207F4E /* ImageCell.xib */; };
 		A8E6ACCD2985270C00D0B0ED /* CardSliderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E6ACCB2985270C00D0B0ED /* CardSliderViewController.swift */; };
 		A8E6ACCE2985270C00D0B0ED /* CardSliderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E6ACCB2985270C00D0B0ED /* CardSliderViewController.swift */; };
 		A8E6ACCF2985270C00D0B0ED /* CardSliderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E6ACCB2985270C00D0B0ED /* CardSliderViewController.swift */; };
@@ -104,6 +110,8 @@
 		A83853702983EE1000C801C4 /* MarqueeInfiniteCollectionViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarqueeInfiniteCollectionViewViewController.swift; sourceTree = "<group>"; };
 		A83853712983EE1000C801C4 /* MarqueeInfiniteCollectionViewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarqueeInfiniteCollectionViewViewController.xib; sourceTree = "<group>"; };
 		A87548732983BEA30047177D /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
+		A8D95B6E2986A6B000207F4E /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
+		A8D95B6F2986A6B000207F4E /* ImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCell.xib; sourceTree = "<group>"; };
 		A8E6ACCB2985270C00D0B0ED /* CardSliderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSliderViewController.swift; sourceTree = "<group>"; };
 		A8E6ACCC2985270C00D0B0ED /* CardSliderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardSliderViewController.xib; sourceTree = "<group>"; };
 		A8E6ACD3298527D200D0B0ED /* InfiniteScrollCardSliderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfiniteScrollCardSliderViewController.swift; sourceTree = "<group>"; };
@@ -256,6 +264,8 @@
 			children = (
 				A838535A2983C37600C801C4 /* TextCell.swift */,
 				A838535B2983C37600C801C4 /* TextCell.xib */,
+				A8D95B6E2986A6B000207F4E /* ImageCell.swift */,
+				A8D95B6F2986A6B000207F4E /* ImageCell.xib */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -424,6 +434,7 @@
 				A83853542983C10B00C801C4 /* InfiniteCollectionViewViewController.xib in Resources */,
 				A8E6ACD02985270C00D0B0ED /* CardSliderViewController.xib in Resources */,
 				A8028AB92983B33600939479 /* LaunchScreen.storyboard in Resources */,
+				A8D95B732986A6B000207F4E /* ImageCell.xib in Resources */,
 				A838535F2983C37600C801C4 /* TextCell.xib in Resources */,
 				A8E6ACD8298527D200D0B0ED /* InfiniteScrollCardSliderViewController.xib in Resources */,
 				A8028AB62983B33600939479 /* Assets.xcassets in Resources */,
@@ -437,6 +448,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A83853762983EE1000C801C4 /* MarqueeInfiniteCollectionViewViewController.xib in Resources */,
+				A8D95B742986A6B000207F4E /* ImageCell.xib in Resources */,
 				A83853602983C37600C801C4 /* TextCell.xib in Resources */,
 				A838536D2983EDB200C801C4 /* MarqueeCollectionViewViewController.xib in Resources */,
 				A83853552983C10B00C801C4 /* InfiniteCollectionViewViewController.xib in Resources */,
@@ -450,6 +462,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A83853772983EE1000C801C4 /* MarqueeInfiniteCollectionViewViewController.xib in Resources */,
+				A8D95B752986A6B000207F4E /* ImageCell.xib in Resources */,
 				A83853612983C37600C801C4 /* TextCell.xib in Resources */,
 				A838536E2983EDB200C801C4 /* MarqueeCollectionViewViewController.xib in Resources */,
 				A83853562983C10B00C801C4 /* InfiniteCollectionViewViewController.xib in Resources */,
@@ -476,6 +489,7 @@
 				A8E6ACD5298527D200D0B0ED /* InfiniteScrollCardSliderViewController.swift in Sources */,
 				A83853632983C46300C801C4 /* NSObject+Extension.swift in Sources */,
 				A83853722983EE1000C801C4 /* MarqueeInfiniteCollectionViewViewController.swift in Sources */,
+				A8D95B702986A6B000207F4E /* ImageCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,6 +501,7 @@
 				A83853732983EE1000C801C4 /* MarqueeInfiniteCollectionViewViewController.swift in Sources */,
 				A838535D2983C37600C801C4 /* TextCell.swift in Sources */,
 				A87548752983BEA30047177D /* StringUtils.swift in Sources */,
+				A8D95B712986A6B000207F4E /* ImageCell.swift in Sources */,
 				A83853522983C10B00C801C4 /* InfiniteCollectionViewViewController.swift in Sources */,
 				A8028AEC2983B58D00939479 /* MainViewController.swift in Sources */,
 				A8028AC42983B33600939479 /* PNCollectionViewExampleTests.swift in Sources */,
@@ -511,6 +526,7 @@
 				A8E6ACD7298527D200D0B0ED /* InfiniteScrollCardSliderViewController.swift in Sources */,
 				A83853652983C46300C801C4 /* NSObject+Extension.swift in Sources */,
 				A83853742983EE1000C801C4 /* MarqueeInfiniteCollectionViewViewController.swift in Sources */,
+				A8D95B722986A6B000207F4E /* ImageCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,7 +607,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -645,7 +661,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

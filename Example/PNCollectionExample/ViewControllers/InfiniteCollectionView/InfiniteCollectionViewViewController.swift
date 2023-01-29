@@ -12,7 +12,7 @@ class InfiniteCollectionViewViewController: UIViewController {
     @IBOutlet weak var collectionView: PNInfiniteScrollCollectionView!
     @IBOutlet weak var verticalCollectionView: PNInfiniteScrollCollectionView!
     private let data: [String] = {
-        return (0..<10).map { index in
+        (0..<10).map { index in
             "value: \(index)"
         }
     }()

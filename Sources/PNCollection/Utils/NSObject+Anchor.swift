@@ -1,5 +1,5 @@
 //
-//  NSObject+Extension.swift
+//  NSObject+Anchor.swift
 //  PNCollection
 //
 //  Created by P.Nam on 18/11/2022.

@@ -9,11 +9,6 @@ import UIKit
 
 private var dataSourceKey: Void?
 
-public enum PNInfiniteDirection {
-    case vertical
-    case horizontal
-}
-
 public typealias PNVisibleItem = (indexPath: IndexPath, frame: CGRect)
 
 open class PNInfiniteScrollCollectionView: UICollectionView {
@@ -134,7 +129,7 @@ open class PNInfiniteScrollCollectionView: UICollectionView {
         isConfig = false
     }
     
-    open func infiniteScroll(by visibleItems: [PNVisibleItem], and contentOffset: CGPoint, with direction: PNInfiniteDirection) {
+    open func infiniteScroll(by visibleItems: [PNVisibleItem], and contentOffset: CGPoint, with direction: UICollectionView.ScrollDirection) {
         let leftResetPosition = leftResetPosition
         let rightResetPosition = rightResetPosition
         let firstCell = visibleItems.first { visibleItem in
@@ -154,6 +149,13 @@ open class PNInfiniteScrollCollectionView: UICollectionView {
             let lastPosition = direction == .vertical ? lasCell.frame.minY: lasCell.frame.minX
             let lastSize = direction == .vertical ? lasCell.frame.height: lasCell.frame.width
             if offset + lastSize > lastPosition {
+                resetPosition()
+            }
+        } else if visibleItems.count == 1, let firstItem = visibleItems.first {
+            if firstItem.indexPath.item <= leftResetPosition {
+                let toItem = rightResetToPosition
+                infiniteScrollToItem(at: [0, toItem], at: direction == .vertical ? .bottom : .left)
+            } else if firstItem.indexPath.item >= rightResetPosition {
                 resetPosition()
             }
         }
