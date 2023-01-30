@@ -8,7 +8,7 @@
 import UIKit
 
 extension UICollectionView {
-    open var subScrollViews:[UIScrollView] {
+    public var subScrollViews:[UIScrollView] {
         subviews.compactMap { subview in
             subview as? UIScrollView
         }

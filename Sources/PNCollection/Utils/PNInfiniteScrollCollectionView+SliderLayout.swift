@@ -20,10 +20,6 @@ extension PNInfiniteScrollCollectionView {
         }
     }
     
-    open override var leftResetPositionThreshold: Int {
-        collectionViewLayout is PNCardsSliderLayout ? -1 : 0
-    }
-    
     open override func infiniteScrollToItem(at indexPath: IndexPath, at scrollPosition: UICollectionView.ScrollPosition) {
         if let layout = collectionViewLayout as? PNCardsSliderLayout {
             layout.selectedItem = indexPath.item
