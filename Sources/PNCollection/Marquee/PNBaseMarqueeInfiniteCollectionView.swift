@@ -12,6 +12,7 @@ public protocol PNBaseMarqueeCollectionView: AnyObject {
     var direction: UICollectionView.ScrollDirection { get set }
     var scrollSpeed: Double { get set }
     var isRunning: Bool { get set }
+    var isDuringAnimation: Bool { get set }
     var isAutoScroll: Bool { get set }
     var autoScrollForSection: Int { get set }
     var isPausedScroll: Bool { get set }
@@ -21,6 +22,9 @@ public protocol PNBaseMarqueeCollectionView: AnyObject {
 extension PNBaseMarqueeCollectionView where Self: UICollectionView {
     private func isLastItemFullyVisible(for scrollView: UIScrollView) -> Bool {
         let numberOfItems = numberOfItems(inSection: 0)
+        if numberOfItems == 0 {
+            return false
+        }
         let lastIndexPath = IndexPath(item: numberOfItems - 1, section: 0)
         
         guard let attrs = collectionViewLayout.layoutAttributesForItem(at: lastIndexPath)
@@ -33,21 +37,26 @@ extension PNBaseMarqueeCollectionView where Self: UICollectionView {
     public func setContentOffset(for scrollView: UIScrollView) {
         isPausedScroll = false
         let duration = duration
-        UIView.animate(withDuration: duration, delay: 0, options: [.allowUserInteraction, .curveLinear]) { [weak self] in
-            guard let self = self else { return }
-            switch self.direction {
-            case .vertical:
-                scrollView.contentOffset.y += self.scrollSpeed
-            case .horizontal:
-                scrollView.contentOffset.x += self.scrollSpeed
-            @unknown default:
-                break
+        if !isDuringAnimation, isUserInteractionEnabled {
+            isDuringAnimation = true
+            scrollView.layer.removeAllAnimations()
+            UIView.animate(withDuration: duration, delay: 0, options: [.allowUserInteraction, .curveLinear]) { [weak self] in
+                guard let self = self else { return }
+                if self.isDuringAnimation {
+                    switch self.direction {
+                    case .vertical:
+                        scrollView.contentOffset.y += self.scrollSpeed
+                    case .horizontal:
+                        scrollView.contentOffset.x += self.scrollSpeed
+                    @unknown default:
+                        break
+                    }
+                }
+            } completion: { isFinished in
+                
             }
-        } completion: { isFinished in
-            
         }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + duration * 0.9) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
             guard let self = self else { return }
             if !self.isLastItemFullyVisible(for: scrollView) {
                 if self.isRunning {
@@ -56,6 +65,7 @@ extension PNBaseMarqueeCollectionView where Self: UICollectionView {
             } else {
                 self.isPausedScroll = true
             }
+            self.isDuringAnimation = false
         }
     }
     
@@ -75,6 +85,7 @@ extension PNBaseMarqueeCollectionView where Self: UICollectionView {
     
     // - MARK: Start marquee
     public func startAutoScroll() {
+        stopAutoScroll()
         setAutoScrollSpeed()
     }
     
@@ -100,11 +111,11 @@ extension PNBaseMarqueeCollectionView where Self: UICollectionView {
         removeAnimate()
     }
     
-    private func removeAnimate() {
+    func removeAnimate() {
         let subScrollViews = subScrollViews
         if subScrollViews.isEmpty || autoScrollForSection < 0 {
             stopAnimateScroll(for: self)
-        } else if autoScrollForSection >= subScrollViews.count - 1 {
+        } else if autoScrollForSection > subScrollViews.count - 1 {
             stopAnimateScroll(for: subScrollViews[subScrollViews.count - 1])
         } else {
             stopAnimateScroll(for: subScrollViews[autoScrollForSection])

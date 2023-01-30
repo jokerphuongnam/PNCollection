@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "PNCollection"
-  s.version      = "1.0.3"
+  s.version      = "1.0.4"
   s.summary      = "A lib support for handle with infinite collection view, marquee, cardsliders"
   s.description  = <<-DESC
   A lib support for handle with infinite collection view, marquee, cardsliders use for special UI

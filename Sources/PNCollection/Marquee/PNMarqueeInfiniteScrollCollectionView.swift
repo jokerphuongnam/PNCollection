@@ -15,6 +15,7 @@ open class PNMarqueeInfiniteScrollCollectionView: PNInfiniteScrollCollectionView
             isPausedScroll = false
         }
     }
+    open var isDuringAnimation: Bool = false
     open var isPausedScroll: Bool = false
     open var scrollSpeed: Double = 5
     open var autoScrollForSection: Int = .zero
@@ -45,5 +46,10 @@ open class PNMarqueeInfiniteScrollCollectionView: PNInfiniteScrollCollectionView
         } else if sender.state == .ended {
             startAutoScroll()
         }
+    }
+    
+    open override func infiniteScrollToItem(toItem: Int, direction: UICollectionView.ScrollDirection, _ isBack: Bool) {
+        removeAnimate()
+        super.infiniteScrollToItem(toItem: toItem, direction: direction, isBack)
     }
 }

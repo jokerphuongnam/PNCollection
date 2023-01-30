@@ -15,6 +15,7 @@ open class PNMarqueeCollectionView: UICollectionView, PNBaseMarqueeCollectionVie
             isPausedScroll = false
         }
     }
+    open var isDuringAnimation: Bool = false
     open var isPausedScroll: Bool = false
     open var scrollSpeed: Double = 5
     open var autoScrollForSection: Int = .zero
