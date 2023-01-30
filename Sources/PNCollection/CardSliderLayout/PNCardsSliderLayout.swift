@@ -70,18 +70,16 @@ open class PNCardsSliderLayout: UICollectionViewLayout {
         collectionView.showsHorizontalScrollIndicator = false
     }
     
-    open override func invalidateLayout() {
-        cacheAttributes = initCacheAttributes()
-        super.invalidateLayout()
-    }
-    
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         guard let collectionView = collectionView else { return nil }
+        let count = collectionView.numberOfItems(inSection: 0)
+        if cacheAttributes.isEmpty && count != 0 {
+            cacheAttributes = initCacheAttributes()
+        }
         let baseAttributes = cacheAttributes.compactMap { $0.copy() as? UICollectionViewLayoutAttributes }
         
         let size = contentSize
         let selectedItem = selectedItem
-        let count = collectionView.numberOfItems(inSection: 0)
         let contentOffsetX = collectionView.contentOffset.x
         let selectedItemDouble = collectionView.contentOffset.x / collectionView.bounds.width
         let ratioScreenOffsetX = selectedItemDouble - CGFloat(selectedItem)
@@ -94,7 +92,6 @@ open class PNCardsSliderLayout: UICollectionViewLayout {
             defaultMaxVisibleItem = numberOfItemsVisible + 1
         }
         let maxVisibleItem = min(count - selectedItem, defaultMaxVisibleItem)
-        
         let layoutAttributes = (0..<maxVisibleItem).map { index -> UICollectionViewLayoutAttributes in
             let visibleIndex = selectedItem + index
             let reverseIndex = maxVisibleItem - index
