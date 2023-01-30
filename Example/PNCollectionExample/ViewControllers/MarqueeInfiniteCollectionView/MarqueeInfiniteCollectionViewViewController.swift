@@ -22,15 +22,15 @@ class MarqueeInfiniteCollectionViewViewController: UIViewController {
         collectionView.infiniteDataSource = self
         collectionView.delegate = self
         collectionView.collectionViewLayout = layout
-        collectionView.scrollSpeed = 5
+        collectionView.scrollSpeed = 3
         
         collectionView.register(UINib(nibName: TextCell.name, bundle: nil) , forCellWithReuseIdentifier: TextCell.name)
         
-        verticalCollectionView.infiniteDataSource = self
-        verticalCollectionView.delegate = self
-        verticalCollectionView.collectionViewLayout = verticalLayout
-        verticalCollectionView.scrollSpeed = 5
-        verticalCollectionView.direction = .vertical
+//        verticalCollectionView.infiniteDataSource = self
+//        verticalCollectionView.delegate = self
+//        verticalCollectionView.collectionViewLayout = verticalLayout
+//        verticalCollectionView.scrollSpeed = 3
+//        verticalCollectionView.direction = .vertical
         
         verticalCollectionView.register(UINib(nibName: TextCell.name, bundle: nil) , forCellWithReuseIdentifier: TextCell.name)
     }
@@ -48,9 +48,9 @@ class MarqueeInfiniteCollectionViewViewController: UIViewController {
 
 extension MarqueeInfiniteCollectionViewViewController: PNInfiniteScrollCollectionViewDataSource {
     var layout: UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1.0))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let firstItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(120))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(120), heightDimension: .absolute(120))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [firstItem])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous

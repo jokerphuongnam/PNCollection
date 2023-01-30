@@ -153,22 +153,28 @@ open class PNInfiniteScrollCollectionView: UICollectionView {
             let firstPosition = direction == .vertical ? firstCell.frame.minY: firstCell.frame.minX
             if offset < firstPosition {
                 let toItem = rightResetToPosition
-                infiniteScrollToItem(at: [0, toItem], at: direction == .vertical ? .bottom : .left)
+                infiniteScrollToItem(toItem: toItem, direction: direction, false)
             }
         } else if let lasCell = lasCell {
             let lastPosition = direction == .vertical ? lasCell.frame.minY: lasCell.frame.minX
             let lastSize = direction == .vertical ? lasCell.frame.height: lasCell.frame.width
             if offset + lastSize > lastPosition {
-                resetPosition()
+                let toItem = leftResetPosition
+                infiniteScrollToItem(toItem: toItem, direction: direction, true)
             }
         } else if visibleItems.count == 1, let firstItem = visibleItems.first {
             if firstItem.indexPath.item <= leftResetPosition {
                 let toItem = rightResetToPosition
-                infiniteScrollToItem(at: [0, toItem], at: direction == .vertical ? .bottom : .left)
+                infiniteScrollToItem(toItem: toItem, direction: direction, false)
             } else if firstItem.indexPath.item >= rightResetPosition {
-                resetPosition()
+                let toItem = leftResetPosition
+                infiniteScrollToItem(toItem: toItem, direction: direction, true)
             }
         }
+    }
+    
+    open func infiniteScrollToItem(toItem: Int, direction: UICollectionView.ScrollDirection, _ isBack: Bool) {
+        infiniteScrollToItem(at: [0, toItem], at: isBack ? (direction == .vertical ? .top : .left): (direction == .vertical ? .bottom : .right))
     }
     
     private func resetPosition() {
