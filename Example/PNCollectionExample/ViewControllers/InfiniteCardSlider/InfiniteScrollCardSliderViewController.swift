@@ -10,11 +10,7 @@ import PNCollection
 
 class InfiniteScrollCardSliderViewController: UIViewController {
     @IBOutlet weak var collectionView: PNInfiniteScrollCollectionView!
-    private let data: [(value: String, color: UIColor)] = {
-        (0..<4).map { index in
-            ("value: \(index)", [.red, .blue, .green, .gray][index])
-        }
-    }()
+    private var data: [(value: String, color: UIColor)] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +20,13 @@ class InfiniteScrollCardSliderViewController: UIViewController {
         collectionView.collectionViewLayout = layout
         
         collectionView.register(UINib(nibName: TextCell.name, bundle: nil) , forCellWithReuseIdentifier: TextCell.name)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+            guard let self = self else { return }
+            self.data = (0..<4).map { index in
+                ("value: \(index)", [.red, .blue, .green, .gray][index])
+            }
+            self.collectionView.reloadData()
+        }
     }
 }
 

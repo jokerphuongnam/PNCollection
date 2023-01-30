@@ -39,7 +39,7 @@ open class PNInfiniteScrollCollectionView: UICollectionView {
             if let newValue = newValue {
                 count = newValue.collectionView(self, numberOfItemsInSection: 0)
                 numberOfSets = newValue.numberOfSets(in: self)
-                setRetainedAssociatedObject(&dataSourceKey, PNInfiniteScrollCollectionDataSource(newValue, realCount: count, numberOfSets: numberOfSets))
+                setRetainedAssociatedObject(&dataSourceKey, PNInfiniteScrollCollectionDataSource(newValue))
                 dataSource = getAssociatedObject(&dataSourceKey)
                 if isLayoutSubViews {
                     layoutIfNeeded()
@@ -81,52 +81,62 @@ open class PNInfiniteScrollCollectionView: UICollectionView {
     open override func reloadData() {
         super.reloadData()
         isConfig = false
+        resetCount()
     }
     
     open override func insertSections(_ sections: IndexSet) {
         super.insertSections(sections)
         isConfig = false
+        resetCount()
     }
     
     open override func deleteSections(_ sections: IndexSet) {
         super.deleteSections(sections)
         isConfig = false
+        resetCount()
     }
     
     open override func moveSection(_ section: Int, toSection newSection: Int) {
         super.moveSection(section, toSection: newSection)
         isConfig = false
+        resetCount()
     }
     
     open override func reloadSections(_ sections: IndexSet) {
         super.reloadSections(sections)
         isConfig = false
+        resetCount()
     }
     
     open override func insertItems(at indexPaths: [IndexPath]) {
         super.insertItems(at: indexPaths)
         isConfig = false
+        resetCount()
     }
     
     open override func deleteItems(at indexPaths: [IndexPath]) {
         super.deleteItems(at: indexPaths)
         isConfig = false
+        resetCount()
     }
     
     open override func moveItem(at indexPath: IndexPath, to newIndexPath: IndexPath) {
         super.moveItem(at: indexPath, to: newIndexPath)
         isConfig = false
+        resetCount()
     }
     
     open override func reloadItems(at indexPaths: [IndexPath]) {
         super.reloadItems(at: indexPaths)
         isConfig = false
+        resetCount()
     }
     
     @available(iOS 15.0, *)
     open override func reconfigureItems(at indexPaths: [IndexPath]) {
         super.reconfigureItems(at: indexPaths)
         isConfig = false
+        resetCount()
     }
     
     open func infiniteScroll(by visibleItems: [PNVisibleItem], and contentOffset: CGPoint, with direction: UICollectionView.ScrollDirection) {
@@ -170,5 +180,13 @@ open class PNInfiniteScrollCollectionView: UICollectionView {
         infiniteScrollToItem(at: indexPath, at: .top)
         infiniteScrollToItem(at: indexPath, at: .left)
         layoutIfNeeded()
+    }
+    
+    private func resetCount() {
+        guard let infiniteDataSource = infiniteDataSource else {
+            return
+        }
+        count = infiniteDataSource.collectionView(self, numberOfItemsInSection: 0)
+        numberOfSets = infiniteDataSource.numberOfSets(in: self)
     }
 }

@@ -9,13 +9,9 @@ import UIKit
 
 internal final class PNInfiniteScrollCollectionDataSource: NSObject {
     weak var dataSource: PNInfiniteScrollCollectionViewDataSource!
-    private let realCount: Int
-    private let numberOfSets: Int
     
-    init(_ dataSource: PNInfiniteScrollCollectionViewDataSource?, realCount: Int, numberOfSets: Int) {
+    init(_ dataSource: PNInfiniteScrollCollectionViewDataSource?) {
         self.dataSource = dataSource
-        self.realCount = realCount
-        self.numberOfSets = numberOfSets
     }
 }
 
@@ -25,16 +21,19 @@ extension PNInfiniteScrollCollectionDataSource: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let count = realCount
-        let numberOfSets = numberOfSets
+        guard let dataSource = dataSource else { return .zero }
+        let count = dataSource.collectionView(collectionView, numberOfItemsInSection: 0)
+        let numberOfSets = dataSource.numberOfSets(in: collectionView)
         return count + (count == 0 ? 0 : 2 * numberOfSets)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let dataSource = dataSource else { return UICollectionViewCell(frame: .zero) }
-        var calculateIndex = (indexPath.row - numberOfSets) % realCount
+        let count = dataSource.collectionView(collectionView, numberOfItemsInSection: 0)
+        let numberOfSets = dataSource.numberOfSets(in: collectionView)
+        var calculateIndex = (indexPath.row - numberOfSets) % count
         if calculateIndex < 0  {
-            calculateIndex = realCount - abs(calculateIndex)
+            calculateIndex = count - abs(calculateIndex)
         }
         return dataSource.collectionView(collectionView, cellForItemAt: [0, calculateIndex])
     }

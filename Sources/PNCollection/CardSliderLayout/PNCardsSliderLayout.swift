@@ -21,13 +21,7 @@ open class PNCardsSliderLayout: UICollectionViewLayout {
     }
     
     fileprivate var contentHeight: CGFloat = 0
-    fileprivate lazy var baseAttributes: [UICollectionViewLayoutAttributes] = {
-        guard let collectionView = collectionView else { return [] }
-        let count = collectionView.numberOfItems(inSection: 0)
-        return (0..<count).map { index in
-            UICollectionViewLayoutAttributes(forCellWith: IndexPath(item: index, section: 0))
-        }
-    }()
+    fileprivate lazy var cacheAttributes: [UICollectionViewLayoutAttributes] = initCacheAttributes()
     
     public var selectedItemObserve: ((_ index: Int) -> ())? = nil
     public var selectedItem: Int {
@@ -76,9 +70,14 @@ open class PNCardsSliderLayout: UICollectionViewLayout {
         collectionView.showsHorizontalScrollIndicator = false
     }
     
+    open override func invalidateLayout() {
+        cacheAttributes = initCacheAttributes()
+        super.invalidateLayout()
+    }
+    
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         guard let collectionView = collectionView else { return nil }
-        let baseAttributes = baseAttributes.compactMap { $0.copy() as? UICollectionViewLayoutAttributes }
+        let baseAttributes = cacheAttributes.compactMap { $0.copy() as? UICollectionViewLayoutAttributes }
         
         let size = contentSize
         let selectedItem = selectedItem
@@ -126,6 +125,14 @@ open class PNCardsSliderLayout: UICollectionViewLayout {
         }
         return layoutAttributes.sorted { lhs, rhs in
             lhs.indexPath.item < rhs.indexPath.item
+        }
+    }
+    
+    private func initCacheAttributes() -> [UICollectionViewLayoutAttributes] {
+        guard let collectionView = collectionView else { return [] }
+        let count = collectionView.numberOfItems(inSection: 0)
+        return (0..<count).map { index in
+            UICollectionViewLayoutAttributes(forCellWith: IndexPath(item: index, section: 0))
         }
     }
 }
