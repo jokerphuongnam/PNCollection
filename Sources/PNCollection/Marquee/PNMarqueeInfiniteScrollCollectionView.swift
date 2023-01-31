@@ -50,6 +50,9 @@ open class PNMarqueeInfiniteScrollCollectionView: PNInfiniteScrollCollectionView
     
     open override func infiniteScrollToItem(toItem: Int, direction: UICollectionView.ScrollDirection, _ isBack: Bool) {
         removeAnimate()
+        setNeedsLayout()
+        Thread.sleep(forTimeInterval: duration)
+        setNeedsLayout()
         super.infiniteScrollToItem(toItem: toItem, direction: direction, isBack)
     }
 }

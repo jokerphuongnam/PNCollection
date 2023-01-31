@@ -37,23 +37,28 @@ extension PNBaseMarqueeCollectionView where Self: UICollectionView {
     public func setContentOffset(for scrollView: UIScrollView) {
         isPausedScroll = false
         let duration = duration
-        if !isDuringAnimation, isUserInteractionEnabled {
-            isDuringAnimation = true
-            scrollView.layer.removeAllAnimations()
-            UIView.animate(withDuration: duration, delay: 0, options: [.allowUserInteraction, .curveLinear]) { [weak self] in
-                guard let self = self else { return }
-                if self.isDuringAnimation {
-                    switch self.direction {
-                    case .vertical:
-                        scrollView.contentOffset.y += self.scrollSpeed
-                    case .horizontal:
-                        scrollView.contentOffset.x += self.scrollSpeed
-                    @unknown default:
-                        break
+        if !isDuringAnimation {
+            if !isDragging {
+                isDuringAnimation = true
+                scrollView.layer.removeAllAnimations()
+                UIView.animate(withDuration: duration, delay: 0, options: [.allowUserInteraction, .curveLinear]) { [weak self] in
+                    guard let self = self else { return }
+                    if self.isDuringAnimation {
+                        switch self.direction {
+                        case .vertical:
+                            scrollView.contentOffset.y += self.scrollSpeed
+                        case .horizontal:
+                            scrollView.contentOffset.x += self.scrollSpeed
+                        @unknown default:
+                            break
+                        }
+                        self.layoutIfNeeded()  
                     }
+                } completion: { isFinished in
+                    
                 }
-            } completion: { isFinished in
-                
+            } else {
+                removeAnimate()
             }
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
