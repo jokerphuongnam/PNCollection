@@ -8,6 +8,8 @@
 import UIKit
 
 open class PNMarqueeCollectionView: UICollectionView, PNBaseMarqueeCollectionView {
+    open var animator: UIViewPropertyAnimator?
+    
     private var isConfig: Bool = false
     open var direction: UICollectionView.ScrollDirection = .horizontal
     open var isRunning: Bool = false {

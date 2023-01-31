@@ -10,6 +10,7 @@ import UIKit
 public protocol PNBaseMarqueeCollectionView: AnyObject {
     var duration: TimeInterval { get }
     var direction: UICollectionView.ScrollDirection { get set }
+    var animator: UIViewPropertyAnimator? { get set }
     var scrollSpeed: Double { get set }
     var isRunning: Bool { get set }
     var isDuringAnimation: Bool { get set }
@@ -40,8 +41,7 @@ extension PNBaseMarqueeCollectionView where Self: UICollectionView {
         if !isDuringAnimation {
             if !isDragging {
                 isDuringAnimation = true
-                scrollView.layer.removeAllAnimations()
-                UIView.animate(withDuration: duration, delay: 0, options: [.allowUserInteraction, .curveLinear]) { [weak self] in
+                animator = UIViewPropertyAnimator.runningPropertyAnimator(withDuration: duration * 1.1, delay: 0, options: [.allowUserInteraction, .curveLinear]) { [weak self] in
                     guard let self = self else { return }
                     if self.isDuringAnimation {
                         switch self.direction {
@@ -128,7 +128,8 @@ extension PNBaseMarqueeCollectionView where Self: UICollectionView {
     }
     
     private func stopAnimateScroll(for scrollView: UIScrollView) {
-        scrollView.layer.removeAllAnimations()
+        animator?.stopAnimation(true)
+        animator = nil
     }
     
     private func invalidateTimer() {

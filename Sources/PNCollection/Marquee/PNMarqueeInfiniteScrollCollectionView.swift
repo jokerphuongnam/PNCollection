@@ -8,6 +8,8 @@
 import UIKit
 
 open class PNMarqueeInfiniteScrollCollectionView: PNInfiniteScrollCollectionView, PNBaseMarqueeCollectionView {
+    open var animator: UIViewPropertyAnimator?
+    
     private var isConfig: Bool = false
     open var direction: UICollectionView.ScrollDirection = .horizontal
     open var isRunning: Bool = false {
@@ -50,8 +52,6 @@ open class PNMarqueeInfiniteScrollCollectionView: PNInfiniteScrollCollectionView
     
     open override func infiniteScrollToItem(toItem: Int, direction: UICollectionView.ScrollDirection, _ isBack: Bool) {
         removeAnimate()
-        setNeedsLayout()
-        Thread.sleep(forTimeInterval: duration)
         setNeedsLayout()
         super.infiniteScrollToItem(toItem: toItem, direction: direction, isBack)
     }
