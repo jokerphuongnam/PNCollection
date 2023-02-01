@@ -159,7 +159,7 @@ open class PNInfiniteScrollCollectionView: UICollectionView {
             let lastPosition = direction == .vertical ? lasCell.frame.minY: lasCell.frame.minX
             let lastSize = direction == .vertical ? lasCell.frame.height: lasCell.frame.width
             if offset + lastSize > lastPosition {
-                let toItem = leftResetPosition
+                let toItem = leftResetToPosition
                 infiniteScrollToItem(toItem: toItem, direction: direction, true)
             }
         } else if visibleItems.count == 1, let firstItem = visibleItems.first {
@@ -167,7 +167,7 @@ open class PNInfiniteScrollCollectionView: UICollectionView {
                 let toItem = rightResetToPosition
                 infiniteScrollToItem(toItem: toItem, direction: direction, false)
             } else if firstItem.indexPath.item >= rightResetPosition {
-                let toItem = leftResetPosition
+                let toItem = leftResetToPosition
                 infiniteScrollToItem(toItem: toItem, direction: direction, true)
             }
         }
