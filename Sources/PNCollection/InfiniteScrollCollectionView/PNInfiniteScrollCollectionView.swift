@@ -15,8 +15,18 @@ open class PNInfiniteScrollCollectionView: UICollectionView {
     private var isLayoutSubViews = false
     private var isConfig = false
     
-    open var numberOfSets: Int = 0
-    open var count: Int = 0
+    open var numberOfSets: Int {
+        guard let infiniteDataSource = infiniteDataSource else {
+            return .zero
+        }
+        return infiniteDataSource.numberOfSets(in: self)
+    }
+    open var count: Int {
+        guard let infiniteDataSource = infiniteDataSource else {
+            return .zero
+        }
+        return infiniteDataSource.collectionView(self, numberOfItemsInSection: 0)
+    }
     
     open var leftResetPosition: Int {
         numberOfSets - 1 + leftResetPositionThreshold
@@ -37,8 +47,6 @@ open class PNInfiniteScrollCollectionView: UICollectionView {
     open weak var infiniteDataSource: PNInfiniteScrollCollectionViewDataSource! {
         willSet {
             if let newValue = newValue {
-                count = newValue.collectionView(self, numberOfItemsInSection: 0)
-                numberOfSets = newValue.numberOfSets(in: self)
                 setRetainedAssociatedObject(&dataSourceKey, PNInfiniteScrollCollectionDataSource(newValue))
                 dataSource = getAssociatedObject(&dataSourceKey)
                 if isLayoutSubViews {
@@ -81,62 +89,52 @@ open class PNInfiniteScrollCollectionView: UICollectionView {
     open override func reloadData() {
         super.reloadData()
         isConfig = false
-        resetCount()
     }
     
     open override func insertSections(_ sections: IndexSet) {
         super.insertSections(sections)
         isConfig = false
-        resetCount()
     }
     
     open override func deleteSections(_ sections: IndexSet) {
         super.deleteSections(sections)
         isConfig = false
-        resetCount()
     }
     
     open override func moveSection(_ section: Int, toSection newSection: Int) {
         super.moveSection(section, toSection: newSection)
         isConfig = false
-        resetCount()
     }
     
     open override func reloadSections(_ sections: IndexSet) {
         super.reloadSections(sections)
         isConfig = false
-        resetCount()
     }
     
     open override func insertItems(at indexPaths: [IndexPath]) {
         super.insertItems(at: indexPaths)
         isConfig = false
-        resetCount()
     }
     
     open override func deleteItems(at indexPaths: [IndexPath]) {
         super.deleteItems(at: indexPaths)
         isConfig = false
-        resetCount()
     }
     
     open override func moveItem(at indexPath: IndexPath, to newIndexPath: IndexPath) {
         super.moveItem(at: indexPath, to: newIndexPath)
         isConfig = false
-        resetCount()
     }
     
     open override func reloadItems(at indexPaths: [IndexPath]) {
         super.reloadItems(at: indexPaths)
         isConfig = false
-        resetCount()
     }
     
     @available(iOS 15.0, *)
     open override func reconfigureItems(at indexPaths: [IndexPath]) {
         super.reconfigureItems(at: indexPaths)
         isConfig = false
-        resetCount()
     }
     
     open func infiniteScroll(by visibleItems: [PNVisibleItem], and contentOffset: CGPoint, with direction: UICollectionView.ScrollDirection) {
@@ -179,20 +177,12 @@ open class PNInfiniteScrollCollectionView: UICollectionView {
     
     private func resetPosition() {
         guard count > 0 else { return }
-        numberOfSets = numberOfSets == 0 ? infiniteDataSource?.numberOfSets(in: self) ?? 0 : numberOfSets
+        let numberOfSets = numberOfSets
         let item = numberOfSets
         let section = 0
         let indexPath = IndexPath(item: item, section: section)
         infiniteScrollToItem(at: indexPath, at: .top)
         infiniteScrollToItem(at: indexPath, at: .left)
         layoutIfNeeded()
-    }
-    
-    private func resetCount() {
-        guard let infiniteDataSource = infiniteDataSource else {
-            return
-        }
-        count = infiniteDataSource.collectionView(self, numberOfItemsInSection: 0)
-        numberOfSets = infiniteDataSource.numberOfSets(in: self)
     }
 }

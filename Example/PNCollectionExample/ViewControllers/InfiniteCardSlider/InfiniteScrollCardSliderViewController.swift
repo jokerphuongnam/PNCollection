@@ -10,6 +10,7 @@ import PNCollection
 
 class InfiniteScrollCardSliderViewController: UIViewController {
     @IBOutlet weak var collectionView: PNInfiniteScrollCollectionView!
+    @IBOutlet weak var pageControl: UIPageControl!
     private var data: [(value: String, color: UIColor)] = []
     
     override func viewDidLoad() {
@@ -26,17 +27,25 @@ class InfiniteScrollCardSliderViewController: UIViewController {
                 ("value: \(index)", [.red, .blue, .green, .gray][index])
             }
             self.collectionView.reloadData()
+            self.pageControl.numberOfPages = self.data.count
         }
     }
 }
 
 extension InfiniteScrollCardSliderViewController: PNInfiniteScrollCollectionViewDataSource {
-    func numberOfSets(in collectionView: UICollectionView) -> Int {
-        data.count
+    var layout: UICollectionViewLayout {
+        let layout = PNCardsSliderLayout()
+        layout.selectedItemObserve = { [weak self] index in
+            guard let self = self else { return }
+            let dataCount = self.data.count
+            let realIndex = index < dataCount ? index : index - dataCount
+            self.pageControl.currentPage = realIndex
+        }
+        return layout
     }
     
-    var layout: UICollectionViewLayout {
-        PNCardsSliderLayout()
+    func numberOfSets(in collectionView: UICollectionView) -> Int {
+        data.count
     }
     
     var verticalLayout: UICollectionViewLayout {

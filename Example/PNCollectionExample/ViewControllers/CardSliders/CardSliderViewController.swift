@@ -10,6 +10,7 @@ import PNCollection
 
 class CardSliderViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var pageControl: UIPageControl!
     private let data: [String] = {
         (0..<4).map { index in
             "value: \(index)"
@@ -22,13 +23,19 @@ class CardSliderViewController: UIViewController {
         collectionView.delegate = self
         collectionView.collectionViewLayout = layout
         
+        pageControl.numberOfPages = data.count
         collectionView.register(UINib(nibName: TextCell.name, bundle: nil) , forCellWithReuseIdentifier: TextCell.name)
     }
 }
 
 extension CardSliderViewController: UICollectionViewDataSource {
     var layout: UICollectionViewLayout {
-        PNCardsSliderLayout()
+        let layout = PNCardsSliderLayout()
+        layout.selectedItemObserve = { [weak self] index in
+            guard let self = self else { return }
+            self.pageControl.currentPage = index
+        }
+        return layout
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
