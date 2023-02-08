@@ -28,16 +28,25 @@ class CardSliderViewController: UIViewController {
     }
 }
 
-extension CardSliderViewController: UICollectionViewDataSource {
+private extension CardSliderViewController {
     var layout: UICollectionViewLayout {
         let layout = PNCardsSliderLayout()
-        layout.selectedItemObserve = { [weak self] index in
-            guard let self = self else { return }
-            self.pageControl.currentPage = index
-        }
+        layout.delegate = self
         return layout
     }
+}
+
+extension CardSliderViewController: PNCardsSliderLayoutDelegate {
+    func cardsSliderLayout(_ layout: PNCollection.PNCardsSliderLayout, didUpdateSize size: CGSize) {
+        
+    }
     
+    func cardsSliderLayout(_ layout: PNCollection.PNCardsSliderLayout, didUpdateSelectedItem index: Int) {
+        pageControl.currentPage = index
+    }
+}
+
+extension CardSliderViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         data.count
     }

@@ -7,7 +7,13 @@
 
 import UIKit
 
+public protocol PNCardsSliderLayoutDelegate: AnyObject {
+    func cardsSliderLayout(_ layout: PNCardsSliderLayout, didUpdateSize size: CGSize)
+    func cardsSliderLayout(_ layout: PNCardsSliderLayout, didUpdateSelectedItem index: Int)
+}
+
 open class PNCardsSliderLayout: UICollectionViewLayout {
+    open weak var delegate: PNCardsSliderLayoutDelegate? = nil
     fileprivate let size = UIScreen.main.bounds
     fileprivate lazy var contentSize: CGSize = {
         let cellWidth = contentWidth - 16 * CGFloat(numberOfItemsVisible)
@@ -23,7 +29,6 @@ open class PNCardsSliderLayout: UICollectionViewLayout {
     fileprivate var contentHeight: CGFloat = 0
     fileprivate lazy var cacheAttributes: [UICollectionViewLayoutAttributes] = initCacheAttributes()
     
-    public var selectedItemObserve: ((_ index: Int) -> ())? = nil
     public var selectedItem: Int {
         get {
             guard let collectionView = collectionView else { return 0 }
@@ -31,7 +36,7 @@ open class PNCardsSliderLayout: UICollectionViewLayout {
             let selectedItemDouble = collectionView.contentOffset.x / collectionView.bounds.width
             let selectedItemIsInteger = Double(selectedItemDouble) == Double(selectedItem)
             if selectedItemIsInteger || collectionView.contentOffset.x < 0 {
-                selectedItemObserve?(selectedItem)
+                delegate?.cardsSliderLayout(self, didUpdateSelectedItem: selectedItem)
             }
             return selectedItem
         }
@@ -50,6 +55,7 @@ open class PNCardsSliderLayout: UICollectionViewLayout {
     
     open var numberOfItemsVisible: Int = 3
     
+    private var prepareCollectionViewContentSize: CGSize? = nil
     open override var collectionViewContentSize: CGSize {
         CGSize(width: contentWidth * CGFloat((collectionView?.numberOfItems(inSection: 0) ?? 0)), height: contentHeight)
     }
@@ -68,6 +74,10 @@ open class PNCardsSliderLayout: UICollectionViewLayout {
         collectionView.isPagingEnabled = true
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
+        if prepareCollectionViewContentSize?.width ?? 0.0 != collectionViewContentSize.width || prepareCollectionViewContentSize?.height ?? 0.0 != collectionViewContentSize.height {
+            delegate?.cardsSliderLayout(self, didUpdateSize: collectionViewContentSize)
+            prepareCollectionViewContentSize = collectionViewContentSize
+        }
     }
     
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {

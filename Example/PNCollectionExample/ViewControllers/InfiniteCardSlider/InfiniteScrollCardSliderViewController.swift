@@ -32,18 +32,30 @@ class InfiniteScrollCardSliderViewController: UIViewController {
     }
 }
 
-extension InfiniteScrollCardSliderViewController: PNInfiniteScrollCollectionViewDataSource {
+private extension InfiniteScrollCardSliderViewController {
     var layout: UICollectionViewLayout {
         let layout = PNCardsSliderLayout()
-        layout.selectedItemObserve = { [weak self] index in
-            guard let self = self else { return }
-            let dataCount = self.data.count
-            let realIndex = index < dataCount ? index : index - dataCount
-            self.pageControl.currentPage = realIndex
-        }
+        layout.delegate = self
         return layout
     }
+}
+
+extension InfiniteScrollCardSliderViewController: PNCardsSliderLayoutDelegate {
+    func cardsSliderLayout(_ layout: PNCollection.PNCardsSliderLayout, didUpdateSize size: CGSize) {
+        
+    }
     
+    func cardsSliderLayout(_ layout: PNCollection.PNCardsSliderLayout, didUpdateSelectedItem index: Int) {
+        let dataCount = data.count
+        guard dataCount != 0 else {
+            return
+        }
+        let realIndex = index % dataCount
+        pageControl.currentPage = realIndex
+    }
+}
+
+extension InfiniteScrollCardSliderViewController: PNInfiniteScrollCollectionViewDataSource {
     func numberOfSets(in collectionView: UICollectionView) -> Int {
         data.count
     }
